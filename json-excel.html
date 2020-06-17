@@ -26,7 +26,7 @@
   function handleFiles() {
     var selectedFile = document.getElementById("files").files[0];
     var reader = new FileReader();
-    reader.readAsText(selectedFile,"GBK");
+    reader.readAsText(selectedFile,"UTF-8");
     reader.onload = function(){
       json = JSON.parse(this.result);
     };
