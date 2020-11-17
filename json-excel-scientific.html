@@ -1,0 +1,43 @@
+/**
+ created by cyd;
+ time : 2019.12.11
+**/
+
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport"
+        content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <script src="https://unpkg.com/xlsx/dist/xlsx.full.min.js"></script>
+  <title>Document</title>
+</head>
+<body>
+<div>
+  <input type="file" id="files"/>
+  <button onclick="jsonToExcel()">导出为Excel</button>
+</div>
+<script>
+  var json;
+  var inputElement = document.getElementById("files");
+  inputElement.addEventListener("change", handleFiles, false);
+  function handleFiles() {
+    var selectedFile = document.getElementById("files").files[0];
+    var reader = new FileReader();
+    reader.readAsText(selectedFile,"UTF-8");
+    reader.onload = function(){
+      json = JSON.parse(this.result);
+    };
+  }
+  function jsonToExcel () {
+    var filename = "write.xlsx";
+    var ws_name = "SheetJS";
+    var wb = XLSX.utils.book_new();
+    var ws = XLSX.utils.json_to_sheet(json,{ raw: true });
+    XLSX.utils.book_append_sheet(wb, ws, ws_name);
+    XLSX.writeFile(wb, filename);
+  }
+</script>
+</body>
+</html>
